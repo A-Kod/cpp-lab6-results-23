@@ -507,8 +507,14 @@ bool less_than(int number, int granica)
     return number < granica;
 }
 
-
-
+bool square_sol(int x, int a, int b, int c)
+{
+    return a*x*x + b*x + c == 0;
+}
+bool linear_sol(int x, int k, int b)
+{
+    return k*x + b == 0;
+}
 int main(int argc, const char * argv[])
 {
     Complex a_compl (5, 2);
@@ -541,15 +547,26 @@ int main(int argc, const char * argv[])
     cout << "a + b" << a_compl + b_compl << endl;
     cout << "a * b" << a_compl * b_compl << endl;
     cout << endl << endl << endl;
+    //Algorithm
     int granica = 3;
-    int a = 1, val = 1, num = 2;
+    int y = 1, z = 0;
+    int a = 1, b = 0, c = -4, value = 0, num = 3;
+    // Складываем каждый элемент матрицы
     for_each(c_matr2.begin(), c_matr2.end(), bind(add_Num, _1, a));
     cout << c_matr2 << endl;
+    // Складываем каждый элемент матрицы с порядковым номером
     for_each(c_matr2.begin(), c_matr2.end(), bind(add_Indx, _1, 0));
     cout << c_matr2 << endl;
+    // Находим кол-во элементов в матрице, равных заданному числу
     cout << count(c_matr1.begin(), c_matr1.end(), num) << endl;
+    //kx + b = 0
+       cout << count_if(c_matr1.begin(), c_matr1.end(), bind(linear_sol, _1, y, z)) << endl;
+    //Кол-во элементов в матрице меньше числа
     cout << count_if(c_matr1.begin(), c_matr1.end(), bind(less_than, _1, granica)) << endl;
-    cout << *find(c_matr1.begin(), c_matr1.end(), val) << endl;
+    //ax^2 + bx + c = 0
+       cout << *find_if(c_matr1.begin(), c_matr1.end(), bind(square_sol, _1, a, b, c)) << endl;
+    //Поиск заданного элемента???
+    cout << *find(c_matr1.begin(), c_matr1.end(), value) << endl;
     //   Matrix <Complex>first (2,2);
     //    first.ptr[0][0] = a;
     //    first.ptr[0][1] = b;
